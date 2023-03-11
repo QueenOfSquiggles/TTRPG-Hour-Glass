@@ -1,0 +1,366 @@
+[gd_scene load_steps=20 format=3 uid="uid://b5rmybpp18b5o"]
+
+[ext_resource type="Material" uid="uid://chce6p62yf3kg" path="res://Assets/ShaderMaterials/SandTop.material" id="1_04x17"]
+[ext_resource type="Script" path="res://Scenes/MainScreen.cs" id="1_82lwo"]
+[ext_resource type="Material" uid="uid://byvnaedch3fw5" path="res://Assets/ShaderMaterials/SandBottom.material" id="1_sn473"]
+[ext_resource type="Texture2D" uid="uid://bal8mi54f7mij" path="res://Assets/Textures/hourglass/SandBottom.PNG" id="2_llbyw"]
+[ext_resource type="AudioStream" uid="uid://6g7m7bwkis72" path="res://Assets/Audio/jingles_PIZZI12.ogg" id="2_yqcvt"]
+[ext_resource type="AudioStream" uid="uid://bebciomffnsio" path="res://Assets/Audio/jingles_STEEL12.ogg" id="3_gl5rq"]
+[ext_resource type="Texture2D" uid="uid://wmhtfd1emby6" path="res://Assets/Textures/hourglass/SandTop.PNG" id="4_awpdo"]
+[ext_resource type="AudioStream" uid="uid://bbsnwhodbs84c" path="res://Assets/Audio/jingles_NES05.ogg" id="4_sgser"]
+[ext_resource type="AudioStream" uid="uid://cwnxi8vfluss4" path="res://Assets/Audio/jingles_HIT11.ogg" id="5_83a6y"]
+[ext_resource type="Texture2D" uid="uid://uqocsi0o1tbs" path="res://Assets/Textures/chevron_left_FILL0_wght400_GRAD0_opsz48.svg" id="5_520ei"]
+[ext_resource type="Texture2D" uid="uid://bf6xxh741ovv5" path="res://Assets/Textures/chevron_right_FILL0_wght400_GRAD0_opsz48.svg" id="6_u15pk"]
+[ext_resource type="Script" path="res://Scenes/TogglePanelButton.gd" id="7_0yj5t"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_phc7a"]
+load_path = "res://.godot/imported/BottomCap.PNG-bdfc829cd62bd58f076cfe79bf673228.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qktep"]
+load_path = "res://.godot/imported/Glass.PNG-791af51cb81d28f5a05dfe4446f8feb1.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_im5pp"]
+load_path = "res://.godot/imported/TopCap.PNG-d2aeed8d46c70257806603c0916b099f.ctex"
+
+[sub_resource type="LabelSettings" id="LabelSettings_cfhnf"]
+font_size = 24
+
+[sub_resource type="Animation" id="Animation_glwvd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/OptionsPanel:size_flags_stretch_ratio")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_sr76u"]
+resource_name = "ShowPanel"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer/OptionsPanel:size_flags_stretch_ratio")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_okk0x"]
+_data = {
+"RESET": SubResource("Animation_glwvd"),
+"ShowPanel": SubResource("Animation_sr76u")
+}
+
+[node name="MainScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_82lwo")
+sfx_strings = ExtResource("2_yqcvt")
+sfx_steel = ExtResource("3_gl5rq")
+sfx_retro = ExtResource("4_sgser")
+sfx_impact = ExtResource("5_83a6y")
+path_animation_player = NodePath("AnimationPlayer")
+path_spin_minutes = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/HBoxContainer/SpinMinutes")
+path_spin_seconds = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/HBoxContainer/SpinSeconds")
+path_flow_recent = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/FlowRecent")
+path_flow_presets = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/FlowPreset")
+path_check_play_sound = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options/TogglePlaySound")
+path_option_sound = NodePath("HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options/HBoxContainer/OptionSoundFile")
+path_audio_player = NodePath("AudioStreamPlayer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HourglassParts" type="AspectRatioContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BottomCap" type="TextureRect" parent="HBoxContainer/VBoxContainer/HourglassParts"]
+layout_mode = 2
+texture = SubResource("CompressedTexture2D_phc7a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SandBottom" type="TextureRect" parent="HBoxContainer/VBoxContainer/HourglassParts"]
+material = ExtResource("1_sn473")
+layout_mode = 2
+texture = ExtResource("2_llbyw")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SandTop" type="TextureRect" parent="HBoxContainer/VBoxContainer/HourglassParts"]
+material = ExtResource("1_04x17")
+layout_mode = 2
+texture = ExtResource("4_awpdo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Glass" type="TextureRect" parent="HBoxContainer/VBoxContainer/HourglassParts"]
+modulate = Color(1, 1, 1, 0.152941)
+layout_mode = 2
+texture = SubResource("CompressedTexture2D_qktep")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TopCap" type="TextureRect" parent="HBoxContainer/VBoxContainer/HourglassParts"]
+layout_mode = 2
+texture = SubResource("CompressedTexture2D_im5pp")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="BtnStart" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "(Re)Start"
+
+[node name="BtnPause" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Pause"
+
+[node name="BtnResume" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Resume"
+
+[node name="Control" type="Control" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="PanelButton" type="Button" parent="HBoxContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("6_u15pk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("7_0yj5t")
+icon_open = ExtResource("6_u15pk")
+icon_closed = ExtResource("5_520ei")
+
+[node name="OptionsPanel" type="PanelContainer" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/OptionsPanel"]
+layout_mode = 2
+vertical_scroll_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MainRows" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Header" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Header"]
+clip_contents = true
+layout_mode = 2
+text = "TTRPG Hourglass"
+label_settings = SubResource("LabelSettings_cfhnf")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="HSeparator" type="HSeparator" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Times" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LblSelect" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+text = "Select a time"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+alignment = 1
+
+[node name="SpinMinutes" type="SpinBox" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+allow_greater = true
+alignment = 1
+suffix = "Minutes"
+select_all_on_focus = true
+
+[node name="SpinSeconds" type="SpinBox" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 59.0
+value = 15.0
+alignment = 1
+suffix = "Seconds"
+select_all_on_focus = true
+
+[node name="BtnAddPreset" type="Button" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+text = "Add Preset"
+
+[node name="LblRecent" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+text = "Recent Entries
+"
+
+[node name="FlowRecent" type="HFlowContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+
+[node name="Button" type="Button" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/FlowRecent"]
+layout_mode = 2
+text = "1:30"
+
+[node name="LblPresets" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+text = "Presets"
+
+[node name="FlowPreset" type="HFlowContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times"]
+layout_mode = 2
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 8
+
+[node name="Button" type="Button" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/FlowPreset"]
+layout_mode = 2
+text = "1:30"
+
+[node name="Spacer" type="HSeparator" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Options" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options"]
+layout_mode = 2
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="TogglePlaySound" type="CheckButton" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options"]
+layout_mode = 2
+button_pressed = true
+text = "Play sound on time-out"
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options"]
+layout_mode = 2
+alignment = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options/HBoxContainer"]
+layout_mode = 2
+text = "Sound Option"
+
+[node name="OptionSoundFile" type="OptionButton" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Options/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+item_count = 4
+selected = 0
+popup/item_0/text = "Strings"
+popup/item_0/id = 0
+popup/item_1/text = "Steel Drums"
+popup/item_1/id = 1
+popup/item_2/text = "Retro"
+popup/item_2/id = 2
+popup/item_3/text = "Impact Noise"
+popup/item_3/id = 3
+
+[node name="Spacer3" type="HSeparator" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="DataManagement" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+layout_mode = 2
+
+[node name="BtnSaveTime" type="Button" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/DataManagement"]
+layout_mode = 2
+tooltip_text = "Recent and Preset lists are saved automatically on exit. But if you worry about a crash, it's a good idea to save periodically."
+text = "Force Save Data"
+
+[node name="Control" type="Control" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/DataManagement"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="BtnClearData" type="Button" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/DataManagement"]
+layout_mode = 2
+tooltip_text = "Recent and Preset lists are saved automatically on exit. But if you worry about a crash, it's a good idea to save periodically."
+text = "Erase Save Data (No going back afterwards)"
+
+[node name="Spacer2" type="HSeparator" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="Dedication" type="VBoxContainer" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Dedication"]
+layout_mode = 2
+text = "Audio SFX by Kenney @ Kenney.nl"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Dedication"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "This tool was created for my brother, who wanted a fun little tool for timing his players during their expansive D&D campaign. He wanted an hour glass, that could perform many different times.
+
+And so this tool is dedicated to my dear brother, [i][b]you absolute fucking dork.[/b][/i]"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_okk0x")
+}
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/BtnStart" to="." method="TimeStart"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/BtnPause" to="." method="TimePause"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/BtnResume" to="." method="TimeResume"]
+[connection signal="toggled" from="HBoxContainer/PanelButton" to="." method="ToggleOptionsPanel"]
+[connection signal="toggled" from="HBoxContainer/PanelButton" to="HBoxContainer/PanelButton" method="_on_toggled"]
+[connection signal="pressed" from="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/Times/BtnAddPreset" to="." method="AddTimePreset"]
+[connection signal="pressed" from="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/DataManagement/BtnSaveTime" to="." method="SaveTimes"]
+[connection signal="pressed" from="HBoxContainer/OptionsPanel/ScrollContainer/MarginContainer/MainRows/DataManagement/BtnClearData" to="." method="ClearData"]
